@@ -14,6 +14,15 @@ Photo Selector for Android device. Support single choice and multi-choice.
 ###Quick Start 
 
 
+* Step 0 Add module selectorPhotoLibrary as your dependence.
+
+	
+		dependencies { 
+	   		 compile project(':selectorphotolibrary')
+		}
+
+
+
 * Step 1
   
 
