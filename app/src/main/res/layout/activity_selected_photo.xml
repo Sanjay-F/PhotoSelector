@@ -9,14 +9,7 @@
         android:id="@+id/asp_ab"
         layout="@layout/include_actionbar" />
 
-    <View
-        android:id="@+id/catalog_mask_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/footer"
-        android:layout_below="@+id/asp_ab"
-        android:background="#88000000"
-        android:visibility="invisible" />
+
 
     <GridView
         android:id="@+id/grid"
@@ -29,6 +22,16 @@
         android:numColumns="3"
         android:paddingBottom="?android:attr/actionBarSize"
         android:verticalSpacing="@dimen/space_size" />
+
+
+    <View
+        android:id="@+id/catalog_mask_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/footer"
+        android:layout_below="@+id/asp_ab"
+        android:background="#88000000"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/timeline_area"

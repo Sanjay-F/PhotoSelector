@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark"
+        android:background="#595959"
         android:gravity="end|center_vertical">
 
         <CheckBox
