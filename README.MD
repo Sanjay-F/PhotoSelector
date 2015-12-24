@@ -5,7 +5,7 @@ Photo Selector for Android device. Support single choice and multi-choice.
 
 
 ###ART
-![Example1](art/demo1.png) ![Select1](art/demo2.png)
+![Example1](art/demo1.jpg) ![Select1](art/demo2.jpg)
 
 
 -------------------
