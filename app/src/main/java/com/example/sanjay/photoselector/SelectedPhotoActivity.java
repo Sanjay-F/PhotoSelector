@@ -120,18 +120,10 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
         maskView = findViewById(R.id.catalog_mask_view);
         mPopupAnchorView = findViewById(R.id.footer);
         mTimeLineText = (TextView) findViewById(R.id.timeline_area);
-        // 初始化，先隐藏当前timeline
         mTimeLineText.setVisibility(View.GONE);
         mCategoryText = (TextView) findViewById(R.id.category_btn);
-        // 初始化，加载所有图片
         mCategoryText.setText(R.string.folder_all);
         mPreviewBtn = (Button) findViewById(R.id.preview);
-        // 初始化，按钮状态初始化
-//        if (resultList == null || resultList.size() <= 0) {
-//            mPreviewBtn.setText(R.string.preview);
-//            mPreviewBtn.setEnabled(false);
-//        }
-
 
         mGridView = (GridView) findViewById(R.id.grid);
 
@@ -142,7 +134,7 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
 
         mImageAdapter = new ImageListAdapter(this, imgOptions);
         mImageAdapter.setOnImageClickListener(this);
-//        mGridView.setOnScrollListener(onScrollListener);
+        mGridView.setOnScrollListener(onScrollListener);
         mGridView.setAdapter(mImageAdapter);
         mGridView.setOnItemClickListener(this);
 
