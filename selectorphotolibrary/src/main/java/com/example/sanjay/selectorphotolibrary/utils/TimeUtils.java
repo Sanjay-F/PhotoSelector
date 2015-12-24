@@ -1,4 +1,4 @@
-package com.example.sanjay.photoselector.utils;
+package com.example.sanjay.selectorphotolibrary.utils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

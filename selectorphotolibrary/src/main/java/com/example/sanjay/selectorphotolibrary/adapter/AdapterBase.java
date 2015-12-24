@@ -1,4 +1,4 @@
-package com.example.sanjay.photoselector.adapter;
+package com.example.sanjay.selectorphotolibrary.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;

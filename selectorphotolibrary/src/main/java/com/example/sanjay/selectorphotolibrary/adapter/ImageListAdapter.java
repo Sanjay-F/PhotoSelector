@@ -1,4 +1,4 @@
-package com.example.sanjay.photoselector.adapter;
+package com.example.sanjay.selectorphotolibrary.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,9 +11,9 @@ import android.widget.CheckBox;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.example.sanjay.photoselector.R;
-import com.example.sanjay.photoselector.bean.ImageBean;
-import com.example.sanjay.photoselector.bean.ImgOptions;
+import com.example.sanjay.selectorphotolibrary.R;
+import com.example.sanjay.selectorphotolibrary.bean.ImageBean;
+import com.example.sanjay.selectorphotolibrary.bean.ImgOptions;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -21,10 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * 图片Adapter
- * Created by Nereo on 2015/4/7.
- */
 public class ImageListAdapter extends AdapterBase<String> {
 
     private static final int TYPE_CAMERA = 0;

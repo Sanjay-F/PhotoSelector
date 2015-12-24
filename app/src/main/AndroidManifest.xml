@@ -17,12 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SelectedPhotoActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".PreviewActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>

@@ -1,12 +1,8 @@
-package com.example.sanjay.photoselector.bean;
+package com.example.sanjay.selectorphotolibrary.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * 图片实体
- * Created by Nereo on 2015/4/7.
- */
 public class ImageBean implements Parcelable {
     public String path;
     public String name;

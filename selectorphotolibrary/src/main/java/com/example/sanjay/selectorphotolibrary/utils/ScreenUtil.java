@@ -1,4 +1,4 @@
-package com.example.sanjay.photoselector.utils;
+package com.example.sanjay.selectorphotolibrary.utils;
 
 import android.app.Activity;
 import android.content.Context;

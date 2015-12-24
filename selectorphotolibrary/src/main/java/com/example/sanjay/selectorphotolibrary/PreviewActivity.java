@@ -1,4 +1,4 @@
-package com.example.sanjay.photoselector;
+package com.example.sanjay.selectorphotolibrary;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.sanjay.photoselector.bean.ImageBean;
+import com.example.sanjay.selectorphotolibrary.bean.ImageBean;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -78,7 +78,7 @@ public class PreviewActivity extends AppCompatActivity {
                 Log.e(TAG, " post=" + position + " unSelected=" + unSelectedData.contains(data.get(position)));
                 selectedCb.setChecked(!unSelectedData.contains(data.get(position)));
                 tvFinish.setText(String.format(getString(R.string.confirm_format), data.size() - unSelectedData.size(), maxCount));
-                tvTitle.setText(String.format(getString(R.string.page_number_format), position+1, data.size()));
+                tvTitle.setText(String.format(getString(R.string.page_number_format), position + 1, data.size()));
             }
 
             @Override

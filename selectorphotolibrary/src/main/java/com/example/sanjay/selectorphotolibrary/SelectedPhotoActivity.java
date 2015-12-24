@@ -1,4 +1,4 @@
-package com.example.sanjay.photoselector;
+package com.example.sanjay.selectorphotolibrary;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -30,14 +30,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sanjay.photoselector.adapter.FolderAdapter;
-import com.example.sanjay.photoselector.adapter.ImageListAdapter;
-import com.example.sanjay.photoselector.bean.ImageBean;
-import com.example.sanjay.photoselector.bean.ImageFolder;
-import com.example.sanjay.photoselector.bean.ImgOptions;
-import com.example.sanjay.photoselector.utils.FileUtils;
-import com.example.sanjay.photoselector.utils.ScreenUtil;
-import com.example.sanjay.photoselector.utils.TimeUtils;
+import com.example.sanjay.selectorphotolibrary.adapter.FolderAdapter;
+import com.example.sanjay.selectorphotolibrary.adapter.ImageListAdapter;
+import com.example.sanjay.selectorphotolibrary.bean.ImageBean;
+import com.example.sanjay.selectorphotolibrary.bean.ImageFolder;
+import com.example.sanjay.selectorphotolibrary.bean.ImgOptions;
+import com.example.sanjay.selectorphotolibrary.utils.FileUtils;
+import com.example.sanjay.selectorphotolibrary.utils.ScreenUtil;
+import com.example.sanjay.selectorphotolibrary.utils.TimeUtils;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -108,7 +108,8 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_OK, MainActivity.makeResult(mContext, mImageAdapter.getSelectedImages()));
+                //// TODO: 2015/12/24  
+                setResult(RESULT_OK, new Intent().putExtra("extra_data", mImageAdapter.getSelectedImages()));
                 finish();
             }
         });
@@ -389,7 +390,9 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
         } else if (requestCode == REQUEST_PREVIEW) {
             if (resultCode == RESULT_OK) {
                 Log.e(TAG, "result ok ");
-                setResult(RESULT_OK, MainActivity.makeResult(this, data.<ImageBean>getParcelableArrayListExtra(EXTRA_DATA)));
+
+//                setResult(RESULT_OK, new Intent().putExtra("extra_data", mImageAdapter.getSelectedImages()));
+                setResult(RESULT_OK, new Intent().putExtra("extra_data", data.<ImageBean>getParcelableArrayListExtra(EXTRA_DATA)));
                 finish();
             }
         }

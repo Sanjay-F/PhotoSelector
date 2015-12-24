@@ -1,4 +1,4 @@
-package com.example.sanjay.photoselector.adapter;
+package com.example.sanjay.selectorphotolibrary.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.sanjay.photoselector.R;
-import com.example.sanjay.photoselector.bean.ImageFolder;
+import com.example.sanjay.selectorphotolibrary.R;
+import com.example.sanjay.selectorphotolibrary.bean.ImageFolder;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -145,7 +145,6 @@ public class FolderAdapter extends BaseAdapter {
                     .resize(mImageSize, mImageSize)
                     .centerCrop()
                     .into(cover);
-            // TODO 选择标识
         }
     }
 

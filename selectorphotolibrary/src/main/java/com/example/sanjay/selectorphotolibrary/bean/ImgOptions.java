@@ -1,4 +1,4 @@
-package com.example.sanjay.photoselector.bean;
+package com.example.sanjay.selectorphotolibrary.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

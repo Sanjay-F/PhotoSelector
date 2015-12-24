@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.example.sanjay.photoselector.bean.ImageBean;
-import com.example.sanjay.photoselector.bean.ImgOptions;
+import com.example.sanjay.selectorphotolibrary.SelectedPhotoActivity;
+import com.example.sanjay.selectorphotolibrary.bean.ImageBean;
+import com.example.sanjay.selectorphotolibrary.bean.ImgOptions;
 
 import java.util.ArrayList;
 
@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
                 boolean showCamera = mShowCamera.getCheckedRadioButtonId() == R.id.show;
                 ImgOptions options = new ImgOptions(selectedMode, showCamera);
                 startActivityForResult(SelectedPhotoActivity.makeIntent(MainActivity.this, options), REQUEST_IMAGE);
-
             }
         });
     }
@@ -63,10 +62,7 @@ public class MainActivity extends AppCompatActivity {
                     mResultText.append(imageBean.path);
                     mResultText.append("\n");
                 }
-                Log.e("tag", imgList.toString());
             }
         }
     }
-
-
 }
