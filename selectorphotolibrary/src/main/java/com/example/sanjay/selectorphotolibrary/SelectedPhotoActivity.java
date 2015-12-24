@@ -108,8 +108,7 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //// TODO: 2015/12/24  
-                setResult(RESULT_OK, new Intent().putExtra("extra_data", mImageAdapter.getSelectedImages()));
+                setResult(RESULT_OK, new Intent().putExtra(EXTRA_DATA, mImageAdapter.getSelectedImages()));
                 finish();
             }
         });
@@ -392,7 +391,7 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
                 Log.e(TAG, "result ok ");
 
 //                setResult(RESULT_OK, new Intent().putExtra("extra_data", mImageAdapter.getSelectedImages()));
-                setResult(RESULT_OK, new Intent().putExtra("extra_data", data.<ImageBean>getParcelableArrayListExtra(EXTRA_DATA)));
+                setResult(RESULT_OK, new Intent().putExtra(EXTRA_DATA, data.<ImageBean>getParcelableArrayListExtra(EXTRA_DATA)));
                 finish();
             }
         }

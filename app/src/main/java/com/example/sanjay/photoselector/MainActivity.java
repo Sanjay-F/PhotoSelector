@@ -1,6 +1,5 @@
 package com.example.sanjay.photoselector;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,11 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView mResultText;
     private RadioGroup mChoiceMode, mShowCamera;
-
-
-    public static Intent makeResult(Context mContext, ArrayList<ImageBean> data) {
-        return new Intent(mContext, MainActivity.class).putExtra(EXTRA_DATA, data);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
