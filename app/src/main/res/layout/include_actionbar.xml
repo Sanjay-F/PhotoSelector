@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="?android:attr/actionBarSize"
+              android:background="@color/black"
+              android:orientation="horizontal">
+
+
+    <ImageButton
+        android:id="@+id/ab_back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="?android:actionBarItemBackground"
+        android:padding="@dimen/activity_horizontal_padding"
+        android:src="@drawable/btn_back"
+        />
+
+    <TextView
+        android:id="@+id/ab_title_tv"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:text="选图"
+        android:textSize="17sp"
+        android:textColor="@color/white"/>
+
+
+    <TextView
+        android:padding="7dp"
+        android:id="@+id/ab_confirm_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="8dp"
+        android:background="@drawable/selector_btn_round_corner_green"
+        android:enabled="false"
+        android:textSize="16sp"
+        android:text="确定"
+        android:textColor="@color/white"/>
+
+</LinearLayout>

@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">图片选择器</string>
+    <string name="folder_all">所有圖片</string>
+    <string name="preview">预览</string>
+    <string name="msg_no_camera">No system camera found</string>
+    <string name="msg_amount_limit">Select images amount is limit</string>
+
+    <string name="action_settings">设置</string>
+    <string name="select_mode">选择模式</string>
+    <string name="mode_single">单图模式</string>
+    <string name="mode_multi">九宮格模式</string>
+    <string name="max_select_amount">Max Selected Amount</string>
+    <string name="hint_default_amount">default amount is 9</string>
+    <string name="enable_camera">是否要有摄像按鈕</string>
+    <string name="enable">要</string>
+    <string name="disable">不要</string>
+    <string name="go_select">开始</string>
+    <string name="preview_format">预览(%s)</string>
+    <string name="confirm_format">完成(%1$d / %2$d)</string>
+
+    <string name="page_number_format">%1$d / %2$d</string>
+    <string name="confirm">完成</string>
+    <string name="selected_pic">选图</string>
+    <string name="title_activity_preview">PreviewActivity</string>
+
+
+</resources>

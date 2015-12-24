@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.sanjay.photoselector.SelectedPhotoActivity">
+
+    <include
+        android:id="@+id/asp_ab"
+        layout="@layout/include_actionbar" />
+
+    <View
+        android:id="@+id/catalog_mask_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/footer"
+        android:layout_below="@+id/asp_ab"
+        android:background="#88000000"
+        android:visibility="invisible" />
+
+    <GridView
+        android:id="@+id/grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/asp_ab"
+        android:clipToPadding="false"
+        android:columnWidth="@dimen/image_size"
+        android:horizontalSpacing="@dimen/space_size"
+        android:numColumns="3"
+        android:paddingBottom="?android:attr/actionBarSize"
+        android:verticalSpacing="@dimen/space_size" />
+
+    <TextView
+        android:id="@+id/timeline_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/asp_ab"
+        android:background="#cc000000"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10sp"
+        android:paddingTop="5dp"
+        android:textColor="#CDCECE"
+        android:textSize="14sp"
+        tools:text="2015年4月1日" />
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:background="#cc000000"
+        android:clickable="true">
+
+        <Button
+            android:id="@+id/category_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/text_indicator"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:singleLine="true"
+            android:textColor="@color/folder_text_color"
+            android:textSize="16sp"
+            tools:text="所有图片" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_toLeftOf="@+id/preview"
+            android:background="#292929" />
+
+        <Button
+            android:id="@+id/preview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:enabled="false"
+            android:onClick="onPreviewClick"
+            android:paddingLeft="@dimen/activity_horizontal_padding"
+            android:paddingRight="@dimen/activity_horizontal_padding"
+            android:text="@string/preview"
+            android:textColor="@color/default_text_color"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
