@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sanjay.photoselector.SelectedPhotoActivity">
+    tools:context="com.example.sanjay.selectorphotolibrary.SelectedPhotoActivity">
 
     <include
         android:id="@+id/asp_ab"
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/asp_ab"
         android:clipToPadding="false"
-        android:columnWidth="@dimen/image_size"
+        android:background="@color/gray"
         android:horizontalSpacing="@dimen/space_size"
         android:numColumns="3"
         android:paddingBottom="?android:attr/actionBarSize"

@@ -100,11 +100,11 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
     private void initImageLoaderOption() {
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
-                .threadPoolSize(2) // default 3
+                .threadPoolSize(3) // default 3
                 .threadPriority(Thread.NORM_PRIORITY - 1) // default
                 .denyCacheImageMultipleSizesInMemory()
-                .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
-                .memoryCacheSize(2 * 1024 * 1024)
+                .memoryCache(new LruMemoryCache(3 * 1024 * 1024))
+                .memoryCacheSize(3 * 1024 * 1024)
                 .memoryCacheSizePercentage(13) // default
                 .diskCacheSize(50 * 1024 * 1024)
                 .diskCacheFileCount(100).defaultDisplayImageOptions(new DisplayImageOptions.Builder()

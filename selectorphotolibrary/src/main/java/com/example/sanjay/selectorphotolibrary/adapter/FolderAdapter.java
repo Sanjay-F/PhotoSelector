@@ -19,10 +19,6 @@ import java.util.List;
 //import com.squareup.picasso.Picasso;
 
 
-/**
- * 文件夹Adapter
- * Created by Nereo on 2015/4/7.
- */
 public class FolderAdapter extends BaseAdapter {
 
     private Context mContext;
