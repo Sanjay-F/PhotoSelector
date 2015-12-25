@@ -8,7 +8,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.sanjay.selectorphotolibrary.SelectedPhotoActivity;
-import com.example.sanjay.selectorphotolibrary.bean.ImageBean;
 import com.example.sanjay.selectorphotolibrary.bean.ImgOptions;
 
 import java.util.ArrayList;
@@ -43,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
                 boolean showCamera = mShowCamera.getCheckedRadioButtonId() == R.id.show;
                 ImgOptions options = new ImgOptions(selectedMode, showCamera);
                 startActivityForResult(SelectedPhotoActivity.makeIntent(MainActivity.this, options), REQUEST_IMAGE);
-
-
             }
         });
     }
@@ -54,10 +51,9 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
-                ArrayList<ImageBean> imgList = data.getParcelableArrayListExtra(EXTRA_DATA);
-
-                for (ImageBean imageBean : imgList) {
-                    mResultText.append(imageBean.path);
+                ArrayList<String> pathList = data.getStringArrayListExtra(EXTRA_DATA);
+                for (String path : pathList) {
+                    mResultText.append(path);
                     mResultText.append("\n");
                 }
             }

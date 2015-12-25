@@ -35,20 +35,19 @@ Photo Selector for Android device. Support single choice and multi-choice.
 Receive result 
 
  
-		@Override
-	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	        super.onActivityResult(requestCode, resultCode, data);
-	        if (requestCode == REQUEST_IMAGE) {
-	            if (resultCode == RESULT_OK) {
-	                ArrayList<ImageBean> imgList = data.getParcelableArrayListExtra(EXTRA_DATA);
-	
-	                for (ImageBean imageBean : imgList) {
-	                    mResultText.append(imageBean.path);
-	                    mResultText.append("\n");
-	                }	            
-	            }
-	        }
-	    }
+		    @Override
+            protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+                super.onActivityResult(requestCode, resultCode, data);
+                if (requestCode == REQUEST_IMAGE) {
+                    if (resultCode == RESULT_OK) {
+                        ArrayList<String> pathList = data.getStringArrayListExtra(EXTRA_DATA);
+                        for (String path : pathList) {
+                            mResultText.append(path);
+                            mResultText.append("\n");
+                        }
+                    }
+                }
+            }
 
   
 

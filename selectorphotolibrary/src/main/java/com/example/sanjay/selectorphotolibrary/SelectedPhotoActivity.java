@@ -135,8 +135,7 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_OK, new Intent().putExtra(EXTRA_DATA, mImageAdapter.getSelectedImages()));
-                finish();
+                setOkResult(mImageAdapter.getSelectedImages());
             }
         });
     }
@@ -409,8 +408,6 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // 相机拍照完成后，返回图片路径
-
-
         if (requestCode == REQUEST_CAMERA) {
             if (resultCode == Activity.RESULT_OK) {
                 if (mTmpFile != null) {
@@ -424,12 +421,19 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
         } else if (requestCode == REQUEST_PREVIEW) {
             if (resultCode == RESULT_OK) {
                 Log.e(TAG, "result ok ");
-
-//                setResult(RESULT_OK, new Intent().putExtra("extra_data", mImageAdapter.getSelectedImages()));
-                setResult(RESULT_OK, new Intent().putExtra(EXTRA_DATA, data.<ImageBean>getParcelableArrayListExtra(EXTRA_DATA)));
-                finish();
+                setOkResult(data.<ImageBean>getParcelableArrayListExtra(EXTRA_DATA));
             }
         }
+    }
+
+
+    private void setOkResult(ArrayList<ImageBean> datas) {
+        ArrayList<String> pathDataList = new ArrayList<>();
+        for (ImageBean imageBean : datas) {
+            pathDataList.add(imageBean.path);
+        }
+        setResult(RESULT_OK, new Intent().putExtra(EXTRA_DATA, pathDataList));
+        finish();
     }
 
     @Override
