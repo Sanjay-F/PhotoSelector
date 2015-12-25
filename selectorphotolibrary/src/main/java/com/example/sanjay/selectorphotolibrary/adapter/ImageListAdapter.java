@@ -137,7 +137,6 @@ public class ImageListAdapter extends AdapterBase<String> {
 
     class ViewHolde {
         ImageView image;
-        //        ImageView indicator;
         CheckBox selectedCb;
         View mask;
 

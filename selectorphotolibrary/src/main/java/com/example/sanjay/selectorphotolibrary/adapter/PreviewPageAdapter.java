@@ -60,7 +60,7 @@ public class PreviewPageAdapter extends PagerAdapter {
     }
 
     public View buildView(ImageBean image) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_photo, null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.pagelist_item_preview_photo, null);
         TouchImageView ivPhoto = (TouchImageView) view.findViewById(R.id.ltp_photo_iv);
 
         ImageLoader.getInstance().displayImage("file://" + image.path, ivPhoto);
