@@ -3,21 +3,16 @@ package com.example.sanjay.selectorphotolibrary;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.sanjay.selectorphotolibrary.adapter.PreviewPageAdapter;
 import com.example.sanjay.selectorphotolibrary.bean.ImageBean;
-import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class PreviewActivity extends AppCompatActivity {
@@ -30,7 +25,7 @@ public class PreviewActivity extends AppCompatActivity {
     private CheckBox selectedCb;
     private ArrayList<ImageBean> data;
     private ArrayList<ImageBean> unSelectedData = new ArrayList<>();
-    private MyPageAdapter adapter;
+    private PreviewPageAdapter adapter;
 
     private TextView tvTitle;
 
@@ -65,7 +60,7 @@ public class PreviewActivity extends AppCompatActivity {
         });
 
         mViewPager = (ViewPager) findViewById(R.id.ap_photo_vp);
-        adapter = new MyPageAdapter(data, this);
+        adapter = new PreviewPageAdapter(data, this);
         mViewPager.setAdapter(adapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -110,74 +105,6 @@ public class PreviewActivity extends AppCompatActivity {
 
         tvTitle = ((TextView) findViewById(R.id.ab_title_tv));
         tvTitle.setText(String.format(getString(R.string.page_number_format), 1, data.size()));
-    }
-
-    private class MyPageAdapter extends PagerAdapter {
-
-        private final String TAG = this.getClass().getSimpleName();
-        private ArrayList<ImageBean> data;
-        private Context mContext;
-        private ArrayList<View> viewArrayList = new ArrayList<>();
-        private int curPos = 0;
-
-        public MyPageAdapter(ArrayList<ImageBean> data, Context mContext) {
-
-            this.data = data;
-            this.mContext = mContext;
-            for (ImageBean bean : data) {
-                viewArrayList.add(buildView(bean));
-            }
-        }
-
-        //viewpager中的组件数量
-        @Override
-        public int getCount() {
-            return data.size();
-        }
-
-        //滑动切换的时候销毁当前的组件
-        @Override
-        public void destroyItem(ViewGroup container, int position,
-                                Object object) {
-            container.removeView(viewArrayList.get(position));
-        }
-
-        //每次滑动的时候生成的组件
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            Log.e(TAG, " instantItem+" + position);
-            ((ViewPager) container).addView(viewArrayList.get(position));
-            return viewArrayList.get(position);
-        }
-
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            return arg0 == arg1;
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            return super.getItemPosition(object);
-        }
-
-
-        public int getCurSelectePosition() {
-            return curPos;
-        }
-
-        public View buildView(ImageBean image) {
-
-            ArrayList<View> viewArrayList = new ArrayList<>();
-            View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_photo, null);
-            ImageView ivPhoto = (ImageView) view.findViewById(R.id.ltp_photo_iv);
-            Picasso.with(mContext)
-                    .load(new File(image.path))
-                    .placeholder(R.drawable.default_error)
-                    .into(ivPhoto);
-
-            return view;
-        }
-
     }
 
 }

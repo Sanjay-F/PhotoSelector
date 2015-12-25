@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#343535">
 
-    <ImageView
+    <com.example.sanjay.selectorphotolibrary.widget.TouchImageView
         android:id="@+id/ltp_photo_iv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
