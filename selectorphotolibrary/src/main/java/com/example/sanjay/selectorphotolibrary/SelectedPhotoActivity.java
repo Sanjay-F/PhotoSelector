@@ -89,11 +89,12 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected_photo);
         imgOptions = getIntent().getParcelableExtra(EXTRA_DATA);
+        initImageLoaderOption();
         findView();
         setActionBar();
         initView();
 
-        initImageLoaderOption();
+
         getSupportLoaderManager().initLoader(LOADER_ALL, null, mLoaderCallback);
     }
 
@@ -234,7 +235,6 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
         mFolderPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long l) {
-
                 mFolderAdapter.setSelectIndex(position);
                 new Handler().postDelayed(new Runnable() {
                     @Override

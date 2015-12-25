@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 int selectedMode;
                 if (mChoiceMode.getCheckedRadioButtonId() == R.id.single) {
                     selectedMode = ImgOptions.MODE_SINGLE;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
                 boolean showCamera = mShowCamera.getCheckedRadioButtonId() == R.id.show;
                 ImgOptions options = new ImgOptions(selectedMode, showCamera);
                 startActivityForResult(SelectedPhotoActivity.makeIntent(MainActivity.this, options), REQUEST_IMAGE);
+
+
             }
         });
     }
