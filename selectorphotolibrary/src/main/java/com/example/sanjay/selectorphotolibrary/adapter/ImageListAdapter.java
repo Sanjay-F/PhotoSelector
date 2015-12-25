@@ -14,7 +14,8 @@ import android.widget.ImageView;
 import com.example.sanjay.selectorphotolibrary.R;
 import com.example.sanjay.selectorphotolibrary.bean.ImageBean;
 import com.example.sanjay.selectorphotolibrary.bean.ImgOptions;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class ImageListAdapter extends AdapterBase<String> {
 
     private static final int TYPE_CAMERA = 0;
     private static final int TYPE_NORMAL = 1;
+    private final ImageSize targetSize;
 
     private Context mContext;
 
@@ -42,7 +44,7 @@ public class ImageListAdapter extends AdapterBase<String> {
 
         mContext = context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        targetSize = new ImageSize(80, 50);
 
         DisplayMetrics dm = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -163,13 +165,14 @@ public class ImageListAdapter extends AdapterBase<String> {
 
             if (mItemSize > 0) {
                 // 显示图片
-                Picasso.with(mContext)
-                        .load(imageFile)
-                        .placeholder(R.drawable.default_error)
-                                //.error(R.drawable.default_error)
-                        .resize(mItemSize, mItemSize)
-                        .centerCrop()
-                        .into(image);
+                ImageLoader.getInstance().displayImage("file://"+data.path, image,targetSize);
+
+//                Picasso.with(mContext).load("file://"+data.path)
+//                        .placeholder(R.drawable.default_error)
+//                                //.error(R.drawable.default_error)
+//                        .resize(mItemSize, mItemSize)
+//                        .centerCrop()
+//                        .into(image);
             }
 
 

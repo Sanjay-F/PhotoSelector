@@ -9,16 +9,14 @@ import android.view.ViewGroup;
 import com.example.sanjay.selectorphotolibrary.R;
 import com.example.sanjay.selectorphotolibrary.bean.ImageBean;
 import com.example.sanjay.selectorphotolibrary.widget.TouchImageView;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
  * Created by Sanjay on 2015/12/25 on project PhotoSelector.
  */
 public class PreviewPageAdapter extends PagerAdapter {
-
 
     private final String TAG = this.getClass().getSimpleName();
     private ArrayList<ImageBean> data;
@@ -64,10 +62,13 @@ public class PreviewPageAdapter extends PagerAdapter {
     public View buildView(ImageBean image) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_photo, null);
         TouchImageView ivPhoto = (TouchImageView) view.findViewById(R.id.ltp_photo_iv);
-        Picasso.with(mContext)
-                .load(new File(image.path))
-                .placeholder(R.drawable.default_error)
-                .into(ivPhoto);
+
+        ImageLoader.getInstance().displayImage("file://" + image.path, ivPhoto);
+
+//        Picasso.with(mContext)
+//                .load(new File(image.path))
+//                .placeholder(R.drawable.default_error)
+//                .into(ivPhoto);
 
         return view;
     }

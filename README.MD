@@ -60,6 +60,8 @@ Receive result
 
 base: [MultiImageSelector](https://github.com/lovetuzitong/MultiImageSelector)
 
+use : [TouchImageView](https://github.com/MikeOrtiz/TouchImageView)
+
 ### License
 
 > The MIT License (MIT)

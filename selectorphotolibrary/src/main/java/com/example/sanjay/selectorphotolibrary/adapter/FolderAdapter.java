@@ -10,11 +10,13 @@ import android.widget.TextView;
 
 import com.example.sanjay.selectorphotolibrary.R;
 import com.example.sanjay.selectorphotolibrary.bean.ImageFolder;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+//import com.squareup.picasso.Picasso;
 
 
 /**
@@ -31,8 +33,10 @@ public class FolderAdapter extends BaseAdapter {
     int mImageSize;
 
     int lastSelected = 0;
+    private ImageSize targetSize;
 
-    public FolderAdapter(Context context){
+    public FolderAdapter(Context context) {
+        targetSize = new ImageSize(80, 50);
         mContext = context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mImageSize = mContext.getResources().getDimensionPixelOffset(R.dimen.folder_cover_size);
@@ -40,12 +44,13 @@ public class FolderAdapter extends BaseAdapter {
 
     /**
      * 设置数据集
+     *
      * @param folders
      */
     public void setData(List<ImageFolder> folders) {
-        if(folders != null && folders.size()>0){
+        if (folders != null && folders.size() > 0) {
             mFolders = folders;
-        }else{
+        } else {
             mFolders.clear();
         }
         notifyDataSetChanged();
@@ -53,13 +58,13 @@ public class FolderAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mFolders.size()+1;
+        return mFolders.size() + 1;
     }
 
     @Override
     public ImageFolder getItem(int i) {
-        if(i == 0) return null;
-        return mFolders.get(i-1);
+        if (i == 0) return null;
+        return mFolders.get(i - 1);
     }
 
     @Override
@@ -70,41 +75,44 @@ public class FolderAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
-        if(view == null){
+        if (view == null) {
             view = mInflater.inflate(R.layout.list_item_folder, viewGroup, false);
             holder = new ViewHolder(view);
-        }else{
+        } else {
             holder = (ViewHolder) view.getTag();
         }
         if (holder != null) {
-            if(i == 0){
+            if (i == 0) {
                 holder.name.setText("所有图片");
-                holder.size.setText(getTotalImageSize()+"张");
-                if(mFolders.size()>0){
+                holder.size.setText(getTotalImageSize() + "张");
+                if (mFolders.size() > 0) {
                     ImageFolder f = mFolders.get(0);
-                    Picasso.with(mContext)
-                            .load(new File(f.cover.path))
-                            .error(R.drawable.default_error)
-                            .resize(mImageSize, mImageSize)
-                            .centerCrop()
-                            .into(holder.cover);
+
+                    ImageLoader.getInstance().displayImage("file://" + f.cover.path, holder.cover);
+
+//                    Picasso.with(mContext)
+//                            .load(new File(f.cover.path))
+//                            .error(R.drawable.default_error)
+//                            .resize(mImageSize, mImageSize)
+//                            .centerCrop()
+//                            .into(holder.cover);
                 }
-            }else {
+            } else {
                 holder.bindData(getItem(i));
             }
-            if(lastSelected == i){
+            if (lastSelected == i) {
                 holder.indicator.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 holder.indicator.setVisibility(View.INVISIBLE);
             }
         }
         return view;
     }
 
-    private int getTotalImageSize(){
+    private int getTotalImageSize() {
         int result = 0;
-        if(mFolders != null && mFolders.size()>0){
-            for (ImageFolder f: mFolders){
+        if (mFolders != null && mFolders.size() > 0) {
+            for (ImageFolder f : mFolders) {
                 result += f.images.size();
             }
         }
@@ -112,23 +120,24 @@ public class FolderAdapter extends BaseAdapter {
     }
 
     public void setSelectIndex(int i) {
-        if(lastSelected == i) return;
+        if (lastSelected == i) return;
 
         lastSelected = i;
         notifyDataSetChanged();
     }
 
-    public int getSelectIndex(){
+    public int getSelectIndex() {
         return lastSelected;
     }
 
-    class ViewHolder{
+    class ViewHolder {
         ImageView cover;
         TextView name;
         TextView size;
         ImageView indicator;
-        ViewHolder(View view){
-            cover = (ImageView)view.findViewById(R.id.cover);
+
+        ViewHolder(View view) {
+            cover = (ImageView) view.findViewById(R.id.cover);
             name = (TextView) view.findViewById(R.id.name);
             size = (TextView) view.findViewById(R.id.size);
             indicator = (ImageView) view.findViewById(R.id.indicator);
@@ -137,14 +146,16 @@ public class FolderAdapter extends BaseAdapter {
 
         void bindData(ImageFolder data) {
             name.setText(data.name);
-            size.setText(data.images.size()+"张");
+            size.setText(data.images.size() + "张");
             // 显示图片
-            Picasso.with(mContext)
-                    .load(new File(data.cover.path))
-                    .placeholder(R.drawable.default_error)
-                    .resize(mImageSize, mImageSize)
-                    .centerCrop()
-                    .into(cover);
+            ImageLoader.getInstance().displayImage("file://" + data.cover.path, cover);
+
+//            Picasso.with(mContext)
+//                    .load(new File(data.cover.path))
+//                    .placeholder(R.drawable.default_error)
+//                    .resize(mImageSize, mImageSize)
+//                    .centerCrop()
+//                    .into(cover);
         }
     }
 

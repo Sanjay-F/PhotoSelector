@@ -7,14 +7,14 @@ public class ImageBean implements Parcelable {
     public String path;
     public String name;
     public long time;
+    public long modifyTime;
 
 
-
-
-    public ImageBean(String path, String name, long time) {
+    public ImageBean(String path, String name, long time, long modifyTime) {
         this.path = path;
         this.name = name;
         this.time = time;
+        this.modifyTime= modifyTime;
     }
 
     protected ImageBean(Parcel in) {
@@ -22,7 +22,6 @@ public class ImageBean implements Parcelable {
         name = in.readString();
         time = in.readLong();
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -38,8 +37,6 @@ public class ImageBean implements Parcelable {
     public int hashCode() {
         return path != null ? path.hashCode() : 0;
     }
-
-
 
 
     @Override

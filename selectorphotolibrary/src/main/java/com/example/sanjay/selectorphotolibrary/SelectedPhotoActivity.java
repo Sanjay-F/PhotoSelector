@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -38,7 +39,11 @@ import com.example.sanjay.selectorphotolibrary.bean.ImgOptions;
 import com.example.sanjay.selectorphotolibrary.utils.FileUtils;
 import com.example.sanjay.selectorphotolibrary.utils.ScreenUtil;
 import com.example.sanjay.selectorphotolibrary.utils.TimeUtils;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -88,7 +93,28 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
         setActionBar();
         initView();
 
+        initImageLoaderOption();
         getSupportLoaderManager().initLoader(LOADER_ALL, null, mLoaderCallback);
+    }
+
+    private void initImageLoaderOption() {
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                .threadPoolSize(2) // default 3
+                .threadPriority(Thread.NORM_PRIORITY - 1) // default
+                .denyCacheImageMultipleSizesInMemory()
+                .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
+                .memoryCacheSize(2 * 1024 * 1024)
+                .memoryCacheSizePercentage(13) // default
+                .diskCacheSize(50 * 1024 * 1024)
+                .diskCacheFileCount(100).defaultDisplayImageOptions(new DisplayImageOptions.Builder()
+                        .showImageOnLoading(R.drawable.default_error)
+                        .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
+                        .cacheInMemory(true).cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build())
+
+                .build();
+        ImageLoader.getInstance().init(config);
+
     }
 
     private void setActionBar() {
@@ -239,18 +265,26 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
         @Override
         public void onScrollStateChanged(AbsListView absListView, int state) {
 
-            final Picasso picasso = Picasso.with(mContext);
-            if (state == SCROLL_STATE_IDLE || state == SCROLL_STATE_TOUCH_SCROLL) {
-                picasso.resumeTag(mContext);
-            } else {
-                picasso.pauseTag(mContext);
-            }
+//            final Picasso picasso = Picasso.with(mContext);
+//            if (state == SCROLL_STATE_IDLE || state == SCROLL_STATE_TOUCH_SCROLL) {
+//                picasso.resumeTag(mContext);
+//            } else {
+//                picasso.pauseTag(mContext);
+//            }
 
             if (state == SCROLL_STATE_IDLE) {
                 // 停止滑动，日期指示器消失
                 mTimeLineText.setVisibility(View.GONE);
+
+                mTimeLineText.startAnimation(AnimationUtils
+                        .loadAnimation(getApplicationContext(),
+                                R.anim.alpha_to_zero));
+
             } else if (state == SCROLL_STATE_FLING) {
                 mTimeLineText.setVisibility(View.VISIBLE);
+                mTimeLineText.startAnimation(AnimationUtils
+                        .loadAnimation(getApplicationContext(),
+                                R.anim.alpha_to_one));
             }
         }
 
@@ -260,7 +294,7 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
                 int index = firstVisibleItem + 1 == view.getAdapter().getCount() ? view.getAdapter().getCount() - 1 : firstVisibleItem + 1;
                 ImageBean imageBean = (ImageBean) view.getAdapter().getItem(index);
                 if (imageBean != null) {
-                    mTimeLineText.setText(TimeUtils.formatPhotoDate(imageBean.path));
+                    mTimeLineText.setText(TimeUtils.getTimeStatus(imageBean.modifyTime));
                 }
             }
         }
@@ -276,7 +310,6 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
     }
 
     private void showCameraAction() {
-        // 跳转到系统照相机
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
             // 设置系统相机拍照后的输出路径
@@ -295,6 +328,7 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
                 MediaStore.Images.Media.DATA,
                 MediaStore.Images.Media.DISPLAY_NAME,
                 MediaStore.Images.Media.DATE_ADDED,
+                MediaStore.Images.Media.DATE_MODIFIED,
                 MediaStore.Images.Media._ID};
 
         @Override
@@ -321,7 +355,8 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
                         String path = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
                         String name = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[1]));
                         long dateTime = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[2]));
-                        ImageBean imageBean = new ImageBean(path, name, dateTime);
+                        long modifyDateTime = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[2]));
+                        ImageBean imageBean = new ImageBean(path, name, dateTime, modifyDateTime);
                         imageBeanList.add(imageBean);
                         if (!hasFolderGened) {
                             // 获取文件夹名称
