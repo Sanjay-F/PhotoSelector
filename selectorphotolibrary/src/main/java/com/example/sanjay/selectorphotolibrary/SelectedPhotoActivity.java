@@ -18,21 +18,22 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ListPopupWindow;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sanjay.selectorphotolibrary.adapter.FolderAdapter;
-import com.example.sanjay.selectorphotolibrary.adapter.ImageListAdapter;
+import com.example.sanjay.selectorphotolibrary.adapter.ImgListAdapter;
+import com.example.sanjay.selectorphotolibrary.adapter.base.RecycleAdapterBase;
 import com.example.sanjay.selectorphotolibrary.bean.ImageBean;
 import com.example.sanjay.selectorphotolibrary.bean.ImageFolder;
 import com.example.sanjay.selectorphotolibrary.bean.ImgOptions;
@@ -49,7 +50,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectedPhotoActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, PopupWindow.OnDismissListener, ImageListAdapter.onImageClickListener {
+public class SelectedPhotoActivity extends AppCompatActivity implements PopupWindow.OnDismissListener, ImgListAdapter.onImageClickListener, RecycleAdapterBase.onListItemClickListener<ImageBean> {
 
 
     private static final String TAG = SelectedPhotoActivity.class.getSimpleName();
@@ -60,8 +61,8 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
     private static final int REQUEST_CAMERA = 100;
     private static final int REQUEST_PREVIEW = 101;
     private ArrayList<ImageFolder> mResultFolder = new ArrayList<>();
-    private GridView mGridView;
-    private ImageListAdapter mImageAdapter;
+    //    private GridView mGridView;
+    private ImgListAdapter mImageAdapter;
 
     private ListPopupWindow mFolderPopupWindow;
     private TextView mTimeLineText;
@@ -75,6 +76,8 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
     private View maskView;
     private ImgOptions imgOptions;
     private TextView confirmBtn;
+    private RecyclerView mRecyclerView;
+    private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
 
     public static Intent makeIntent(Context mContext, ImgOptions imgOptions) {
         return new Intent(mContext, SelectedPhotoActivity.class).putExtra(EXTRA_DATA, imgOptions);
@@ -151,18 +154,28 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
         mCategoryText.setText(R.string.folder_all);
         mPreviewBtn = (Button) findViewById(R.id.preview);
 
-        mGridView = (GridView) findViewById(R.id.grid);
+        mRecyclerView = (RecyclerView) findViewById(R.id.asp_img_rv);
+
+        mStaggeredGridLayoutManager =
+                new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+         
+
+        //表示两列，并且是竖直方向的瀑布流
+        mRecyclerView.setLayoutManager(mStaggeredGridLayoutManager);
+
 
     }
 
     private void initView() {
 
 
-        mImageAdapter = new ImageListAdapter(this, imgOptions);
+        mImageAdapter = new ImgListAdapter(this, imgOptions);
         mImageAdapter.setOnImageClickListener(this);
-        mGridView.setOnScrollListener(onScrollListener);
-        mGridView.setAdapter(mImageAdapter);
-        mGridView.setOnItemClickListener(this);
+        mImageAdapter.setOnItemClickListener(this);
+
+        mRecyclerView.addOnScrollListener(onScrollListener);
+        mRecyclerView.setAdapter(mImageAdapter);
+//        mGridView.setOnItemClickListener(this);
 
         mFolderAdapter = new FolderAdapter(mContext);
 
@@ -196,9 +209,9 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
 
                             Log.e(TAG, "onGlobalLayout: height=" + height + " limit height=" + limiteHeigt);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                mGridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                                mFolderPopupWindow.getListView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
                             } else {
-                                mGridView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                                mFolderPopupWindow.getListView().getViewTreeObserver().removeGlobalOnLayoutListener(this);
                             }
                             if (limiteHeigt > scrHeight) {
                                 Log.e(TAG, "onGlobalLayout:  update view");
@@ -246,13 +259,13 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
                         } else {
                             ImageFolder folder = (ImageFolder) adapterView.getItemAtPosition(position);
                             if (null != folder) {
-                                mImageAdapter.setData(folder.images);
+                                mImageAdapter.changeList(folder.images);
                                 mCategoryText.setText(folder.name);
                             }
                             mImageAdapter.setInSubCatalog(true);
                         }
                         // 滑动到最初始位置
-                        mGridView.smoothScrollToPosition(0);
+                        mRecyclerView.smoothScrollToPosition(0);
                     }
                 }, 100);
 
@@ -260,18 +273,12 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
         });
     }
 
-    AbsListView.OnScrollListener onScrollListener = new AbsListView.OnScrollListener() {
+    RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
         @Override
-        public void onScrollStateChanged(AbsListView absListView, int state) {
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
 
-//            final Picasso picasso = Picasso.with(mContext);
-//            if (state == SCROLL_STATE_IDLE || state == SCROLL_STATE_TOUCH_SCROLL) {
-//                picasso.resumeTag(mContext);
-//            } else {
-//                picasso.pauseTag(mContext);
-//            }
-
-            if (state == SCROLL_STATE_IDLE) {
+            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                 // 停止滑动，日期指示器消失
                 mTimeLineText.setVisibility(View.GONE);
 
@@ -279,34 +286,33 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
                         .loadAnimation(getApplicationContext(),
                                 R.anim.alpha_to_zero));
 
-            } else if (state == SCROLL_STATE_FLING) {
+            } else if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                 mTimeLineText.setVisibility(View.VISIBLE);
                 mTimeLineText.startAnimation(AnimationUtils
                         .loadAnimation(getApplicationContext(),
                                 R.anim.alpha_to_one));
             }
+
         }
 
         @Override
-        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
             if (mTimeLineText.getVisibility() == View.VISIBLE) {
-                int index = firstVisibleItem + 1 == view.getAdapter().getCount() ? view.getAdapter().getCount() - 1 : firstVisibleItem + 1;
-                ImageBean imageBean = (ImageBean) view.getAdapter().getItem(index);
-                if (imageBean != null) {
-                    mTimeLineText.setText(TimeUtils.getTimeStatus(imageBean.modifyTime));
+                recyclerView.getAdapter().getItemCount();
+                int[] post = mStaggeredGridLayoutManager.findFirstVisibleItemPositions(null);
+                if (post != null) {
+                    if (post.length >= 1) {
+                        ImageBean imageBean = mImageAdapter.getList().get(post[1]);
+                        if (imageBean != null) {
+                            mTimeLineText.setText(TimeUtils.getTimeStatus(imageBean.modifyTime));
+                        }
+                    }
                 }
             }
         }
     };
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (mImageAdapter.isShowCamera() && position == 0) {
-            showCameraAction();
-        } else {
-            ImageBean imageBean = (ImageBean) parent.getItemAtPosition(position);
-        }
-    }
 
     private void showCameraAction() {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -378,7 +384,7 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
                             }
                         }
                     }
-                    mImageAdapter.setData(imageBeanList);
+                    mImageAdapter.changeList(imageBeanList);
                     // 设定默认选择
 //                    if (resultList != null && resultList.size() > 0) {
 ////                        mImageAdapter.setDefaultSelected(resultList);
@@ -456,4 +462,12 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
         startActivityForResult(PreviewActivity.makeIntent(this, mImageAdapter.getSelectedImages(), imgOptions.getSelectedCount()), REQUEST_PREVIEW);
     }
 
+    @Override
+    public void onItemClick(int position, ImageBean bean) {
+        if (bean == null && position == 0) {
+            showCameraAction();
+        } else {
+            //preview bean
+        }
+    }
 }

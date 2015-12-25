@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.sanjay.selectorphotolibrary.SelectedPhotoActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.example.sanjay.selectorphotolibrary.SelectedPhotoActivity">
 
     <include
         android:id="@+id/asp_ab"
-        layout="@layout/include_actionbar" />
+        layout="@layout/include_actionbar"/>
 
 
-
-    <GridView
-        android:id="@+id/grid"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/asp_img_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/asp_ab"
-        android:clipToPadding="false"
         android:background="@color/gray"
-        android:horizontalSpacing="@dimen/space_size"
-        android:numColumns="3"
-        android:paddingBottom="?android:attr/actionBarSize"
-        android:verticalSpacing="@dimen/space_size" />
+        android:paddingBottom="?android:attr/actionBarSize"/>
 
 
     <View
@@ -31,7 +26,7 @@
         android:layout_above="@+id/footer"
         android:layout_below="@+id/asp_ab"
         android:background="#88000000"
-        android:visibility="invisible" />
+        android:visibility="invisible"/>
 
     <TextView
         android:id="@+id/timeline_area"
@@ -44,7 +39,7 @@
         android:paddingTop="5dp"
         android:textColor="#CDCECE"
         android:textSize="14sp"
-        tools:text="2015年4月1日" />
+        tools:text="2015年4月1日"/>
 
     <RelativeLayout
         android:id="@+id/footer"
@@ -69,14 +64,14 @@
             android:singleLine="true"
             android:textColor="@color/folder_text_color"
             android:textSize="16sp"
-            tools:text="所有图片" />
+            tools:text="所有图片"/>
 
         <View
             android:layout_width="2dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:layout_toLeftOf="@+id/preview"
-            android:background="#292929" />
+            android:background="#292929"/>
 
         <Button
             android:id="@+id/preview"
@@ -91,7 +86,7 @@
             android:paddingRight="@dimen/activity_horizontal_padding"
             android:text="@string/preview"
             android:textColor="@color/default_text_color"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
     </RelativeLayout>
 
