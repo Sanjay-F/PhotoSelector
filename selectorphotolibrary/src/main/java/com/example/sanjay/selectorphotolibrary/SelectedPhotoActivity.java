@@ -150,7 +150,6 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
         mCategoryText = (TextView) findViewById(R.id.category_btn);
         mCategoryText.setText(R.string.folder_all);
         mPreviewBtn = (Button) findViewById(R.id.preview);
-
         mGridView = (GridView) findViewById(R.id.grid);
 
     }
@@ -196,9 +195,9 @@ public class SelectedPhotoActivity extends AppCompatActivity implements AdapterV
 
                             Log.e(TAG, "onGlobalLayout: height=" + height + " limit height=" + limiteHeigt);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                mGridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                                mFolderPopupWindow.getListView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
                             } else {
-                                mGridView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                                mFolderPopupWindow.getListView().getViewTreeObserver().removeGlobalOnLayoutListener(this);
                             }
                             if (limiteHeigt > scrHeight) {
                                 Log.e(TAG, "onGlobalLayout:  update view");
