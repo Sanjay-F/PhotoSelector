@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.sanjay.selectorphotolibrary.R;
 import com.example.sanjay.selectorphotolibrary.bean.ImageFolder;
+import com.example.sanjay.selectorphotolibrary.utils.ImageSchemeUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 
@@ -84,14 +85,9 @@ public class FolderAdapter extends BaseAdapter {
                 if (mFolders.size() > 0) {
                     ImageFolder f = mFolders.get(0);
 
-                    ImageLoader.getInstance().displayImage("file://" + f.cover.path, holder.cover);
-
-//                    Picasso.with(mContext)
-//                            .load(new File(f.cover.path))
-//                            .error(R.drawable.default_error)
-//                            .resize(mImageSize, mImageSize)
-//                            .centerCrop()
-//                            .into(holder.cover);
+//                    ImageLoader.getInstance().displayImage("file://" + f.cover.path, holder.cover);
+                    //TODO 后面改用封装后的NetWorkImageView代替。
+                    ImageLoader.getInstance().displayImage(ImageSchemeUtils.autoWrapUrl(f.cover.path), holder.cover);
                 }
             } else {
                 holder.bindData(getItem(i));
@@ -144,14 +140,8 @@ public class FolderAdapter extends BaseAdapter {
             name.setText(data.name);
             size.setText(data.images.size() + "张");
             // 显示图片
-            ImageLoader.getInstance().displayImage("file://" + data.cover.path, cover);
+            ImageLoader.getInstance().displayImage(ImageSchemeUtils.autoWrapUrl(data.cover.path), cover);
 
-//            Picasso.with(mContext)
-//                    .load(new File(data.cover.path))
-//                    .placeholder(R.drawable.default_error)
-//                    .resize(mImageSize, mImageSize)
-//                    .centerCrop()
-//                    .into(cover);
         }
     }
 

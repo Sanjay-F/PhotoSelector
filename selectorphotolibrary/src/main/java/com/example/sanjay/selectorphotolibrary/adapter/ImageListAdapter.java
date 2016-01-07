@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import com.example.sanjay.selectorphotolibrary.R;
 import com.example.sanjay.selectorphotolibrary.bean.ImageBean;
 import com.example.sanjay.selectorphotolibrary.bean.ImgOptions;
+import com.example.sanjay.selectorphotolibrary.utils.ImageSchemeUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 
@@ -164,14 +165,8 @@ public class ImageListAdapter extends AdapterBase<String> {
 
             if (mItemSize > 0) {
                 // 显示图片
-                ImageLoader.getInstance().displayImage("file://"+data.path, image,targetSize);
+                ImageLoader.getInstance().displayImage(ImageSchemeUtils.autoWrapUrl(data.path), image, targetSize);
 
-//                Picasso.with(mContext).load("file://"+data.path)
-//                        .placeholder(R.drawable.default_error)
-//                                //.error(R.drawable.default_error)
-//                        .resize(mItemSize, mItemSize)
-//                        .centerCrop()
-//                        .into(image);
             }
 
 

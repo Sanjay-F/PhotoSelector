@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.example.sanjay.selectorphotolibrary.R;
 import com.example.sanjay.selectorphotolibrary.bean.ImageBean;
+import com.example.sanjay.selectorphotolibrary.utils.ImageSchemeUtils;
 import com.example.sanjay.selectorphotolibrary.widget.TouchImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -63,12 +64,7 @@ public class PreviewPageAdapter extends PagerAdapter {
         View view = LayoutInflater.from(mContext).inflate(R.layout.pagelist_item_preview_photo, null);
         TouchImageView ivPhoto = (TouchImageView) view.findViewById(R.id.ltp_photo_iv);
 
-        ImageLoader.getInstance().displayImage("file://" + image.path, ivPhoto);
-
-//        Picasso.with(mContext)
-//                .load(new File(image.path))
-//                .placeholder(R.drawable.default_error)
-//                .into(ivPhoto);
+        ImageLoader.getInstance().displayImage(ImageSchemeUtils.autoWrapUrl( image.path), ivPhoto);
 
         return view;
     }
