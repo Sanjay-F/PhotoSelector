@@ -25,16 +25,14 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
 
-
         mResultText = (TextView) findViewById(R.id.result);
         mChoiceMode = (RadioGroup) findViewById(R.id.choice_mode);
         mShowCamera = (RadioGroup) findViewById(R.id.show_camera);
 
+
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 int selectedMode;
                 if (mChoiceMode.getCheckedRadioButtonId() == R.id.single) {
                     selectedMode = ImgOptions.MODE_SINGLE;
@@ -47,6 +45,7 @@ public class MainActivity extends Activity {
             }
         });
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -61,4 +60,6 @@ public class MainActivity extends Activity {
             }
         }
     }
+
+
 }
