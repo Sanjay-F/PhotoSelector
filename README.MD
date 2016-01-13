@@ -9,6 +9,8 @@ Photo Selector for Android device. Support single choice and multi-choice.
 
 
 -------------------
+ 
+
 
 
 ###Quick Start 
@@ -54,6 +56,12 @@ Receive result
  
  
 ---
+
+
+
+# GalleryFinal
+
+今天看到一个更强大的库， 地址：https://github.com/pengjianbo/GalleryFinal
 
 ### Thanks
 
