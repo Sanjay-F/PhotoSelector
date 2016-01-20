@@ -57,6 +57,15 @@ Receive result
  
 ---
 
+# 已知问题
+今天突然遇到有些图片显示不了，查了下是中文路径乱码的问题，
+在LoaderManager.LoaderCallbacks<Cursor>的回调里面，我看到系统返回的路径path内容：
+
+
+	path=/storage/emulated/0/Download/Ң컷䀡.png
+ 	path=/storage/emulated/0/Download/趈ːŏ⭼侠.png
+
+类似上面这种，发现系统自带的图片也是这个问题。强大如快图app也是提示加载错误，没办法，这是系统返回的路径。可能还是得自己去扫描一下比较好。 
 
 
 # GalleryFinal
