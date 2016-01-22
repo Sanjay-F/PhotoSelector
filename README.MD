@@ -56,7 +56,9 @@ Receive result
  
  
 ---
- 
+预想
+#新特性
+现在缺的是截图部分的内容，以前有过一个库，考虑整合起来。
 
 
 # GalleryFinal
