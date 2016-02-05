@@ -26,6 +26,7 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -98,6 +99,7 @@ public class SelectedPhotoActivity extends AppCompatActivity implements PopupWin
         initView();
 
 
+        ListView lv;
         getSupportLoaderManager().initLoader(LOADER_ALL, null, mLoaderCallback);
     }
 
@@ -162,6 +164,7 @@ public class SelectedPhotoActivity extends AppCompatActivity implements PopupWin
 
         //表示两列，并且是竖直方向的瀑布流
         mRecyclerView.setLayoutManager(mStaggeredGridLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
 
 
     }
@@ -313,7 +316,6 @@ public class SelectedPhotoActivity extends AppCompatActivity implements PopupWin
         }
     };
 
-
     private void showCameraAction() {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
@@ -418,6 +420,10 @@ public class SelectedPhotoActivity extends AppCompatActivity implements PopupWin
             if (resultCode == Activity.RESULT_OK) {
                 if (mTmpFile != null) {
                     Log.e(TAG, " dist=" + mTmpFile.getAbsolutePath());
+                    ArrayList<ImageBean> datas=new ArrayList<>();
+                    ImageBean imageBean= new ImageBean(mTmpFile.getAbsolutePath(),mTmpFile.getName(),System.currentTimeMillis(),mTmpFile.lastModified());
+                     datas.add(imageBean);
+                    setOkResult(datas);
                 }
             } else {
                 if (mTmpFile != null && mTmpFile.exists()) {
